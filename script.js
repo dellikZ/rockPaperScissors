@@ -7,16 +7,17 @@ function computerPlay() {
 
 function playerPlay() {
     playerSelection = prompt("We are playing Rock, Paper, Scissors against the computer. Enter your pick[rock/paper/scissors]: ");
+    if(playerSelection === null || playerSelection === undefined || playerSelection === "") {
+        console.log("Invalid");
+        return "Invalid";
+    }
     if(playerSelection.toLowerCase() === "rock") {
         return playerSelection.toLowerCase();
     } else if(playerSelection.toLowerCase() === "paper") {
         return playerSelection.toLowerCase();
     } else if(playerSelection.toLowerCase() === "scissors") {
         return playerSelection.toLowerCase();
-    } else if(playerSelection === null || playerSelection === undefined){
-        console.log('Invalid');
-        return 'Invalid';
-    } else {
+    }else {
         console.log('Invalid');
         return 'Invalid';
     }
