@@ -1,98 +1,53 @@
-function computerPlay() {
-    const picks = ["rock", "paper", "scissors"];
-    let computerPlay = picks[Math.floor(Math.random() * picks.length)];
-    return computerPlay;
+let computerPick = () => {
+    let picks = ["rock", "paper", "scissors"];
+    let randomPick = picks[Math.floor(Math.random() * picks.length)];
+    return randomPick;
 }
 
-
-function playerPlay() {
-    playerSelection = prompt("We are playing Rock, Paper, Scissors against the computer. Enter your pick[rock/paper/scissors]: ");
-    if(playerSelection === null || playerSelection === undefined || playerSelection === "") {
-        console.log("Invalid");
-        return "Invalid";
-    }
-    if(playerSelection.toLowerCase() === "rock") {
-        return playerSelection.toLowerCase();
-    } else if(playerSelection.toLowerCase() === "paper") {
-        return playerSelection.toLowerCase();
-    } else if(playerSelection.toLowerCase() === "scissors") {
-        return playerSelection.toLowerCase();
-    }else {
-        console.log('Invalid');
+let playerPick = () => {
+    let pick = prompt("Welcome to my little Rock, Paper, Scissors game! Enter your pick[rock/paper/scissors]: ");
+    if(pick === null) {
         return 'Invalid';
     }
+    let playerChoice = (pick.toLowerCase() === 'rock' || pick.toLowerCase() === 'paper' || pick.toLowerCase() === 'scissors') ? pick.toLowerCase() : "Invalid";
+    return playerChoice;
 }
 
-
-function oneRound(computer, player) {
-    computer = computerPlay();
-    player = playerPlay();
+let oneRound = () => {
+    let computer = computerPick();
+    let player = playerPick();
     let winner = '';
-
-    if(player === "Invalid") {
-        winner = 'invalid';
-        return winner;
+    if(player === 'Invalid') {
+        return 'Invalid';
     }
-
-    if(computer === player) {
-        console.log(`You picked ${player} and the computer picked ${computer}. It's a tie!`);
-        winner = 'tie';
-        return winner;
-    }
-
-    if (computer === "rock" && player === "scissors") {
-        console.log(`Computer picked ${computer}, you picked ${player}. You Lose! ${computer} beats ${player}.`);
+    if((computer === 'rock' && player === 'scissors') || (computer === 'paper' && player === 'rock') || (computer === 'scissors' && player === 'paper')) {
+        console.log(`You picked ${player}, the computer picked ${computer}. Computer wins!`);
         winner = 'computer';
-        return winner;
-    } else if(computer === "paper" && player === "rock") {
-        console.log(`Computer picked ${computer}, you picked ${player}. You Lose! ${computer} beats ${player}.`);
-        winner = 'computer';
-        return winner;
-    } else if(computer === "scissors" && player === "paper") {
-        console.log(`Computer picked ${computer}, you picked ${player}. You lose! ${computer} beats ${player}.`);
-        winner = 'computer';
-        return winner;
+    } else {
+        console.log(`You picked ${player}, the computer picked ${computer}. You win!`);
+        winner = 'player';
     }
-
-    if(player === "rock" && computer === "scissors") {
-        console.log(`Computer picked ${computer}, you picked ${player}. You win! ${player} beats ${computer}.`);
-        winner = "player";
-        return winner;
-    } else if(player === "paper" && computer === "rock") {
-        console.log(`Computer picked ${computer}, you picked ${player}. You win! ${player} beats ${computer}.`);
-        winner = "player";
-        return winner;
-    } else if(player === "scissors" && computer === "paper") {
-        console.log(`Computer picked ${computer}, you picked ${player}. You win! ${player} beats ${computer}.`);
-        winner = "player";
-        return winner;
-    }
+    return winner;
 }
 
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
+let fullGame = () => {
+    let playerWins = 0;
+    let computerWins = 0;
     for(let i = 0; i < 5; i++) {
-        result = oneRound();
-        if(result === 'invalid') {
+        let gameResult = oneRound();
+        if(gameResult === 'Invalid') {
+            console.log("Wait...That's illegal.");
             return;
         }
-        if(result === "player") {
-            playerScore++;
-        } else if(result === "computer") {
-            computerScore++;
+        if(gameResult === 'player') {
+            playerWins++;
+        } else {
+            computerWins++;
         }
-        
     }
-    if(computerScore > playerScore) {
-        return alert(` The score is\n Computer: ${computerScore}\n Player: ${playerScore}\n You lost!`);
-    } else if(computerScore < playerScore) {
-        return alert(` The score is\n Computer: ${computerScore}\n Player: ${playerScore}\n You won!`);
-    }
+    let gameWinner = playerWins > computerWins ? alert(`The final score is: \n Computer: ${computerWins} \n Player: ${playerWins} \n You won the game!`) : alert(`The final score is: \n Computer: ${computerWins}\n Player: ${playerWins} \n You lost.`);
+    return gameWinner;
 }
 
+fullGame();
 
-
-
-game();
