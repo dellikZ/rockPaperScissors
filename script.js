@@ -4,50 +4,78 @@ let computerPick = () => {
     return randomPick;
 }
 
-let playerPick = () => {
-    let pick = prompt("Welcome to my little Rock, Paper, Scissors game! Enter your pick[rock/paper/scissors]: ");
-    if(pick === null) {
-        return 'Invalid';
-    }
-    let playerChoice = (pick.toLowerCase() === 'rock' || pick.toLowerCase() === 'paper' || pick.toLowerCase() === 'scissors') ? pick.toLowerCase() : "Invalid";
-    return playerChoice;
-}
 
-let oneRound = () => {
+
+
+
+
+
+let oneRound = (playerPick) => {
+    
+    let player = playerPick;
+  
+
     let computer = computerPick();
-    let player = playerPick();
+
     let winner = '';
+    const para = document.createElement('p');
+    const myDiv = document.querySelector('#result');
+    myDiv.className = 'myDiv';
     if(player === 'Invalid') {
         return 'Invalid';
     }
     if((computer === 'rock' && player === 'scissors') || (computer === 'paper' && player === 'rock') || (computer === 'scissors' && player === 'paper')) {
-        console.log(`You picked ${player}, the computer picked ${computer}. Computer wins!`);
+        para.textContent = `You picked ${player}, the computer picked ${computer}. Computer wins!`;
+        myDiv.appendChild(para);
         winner = 'computer';
-    } else {
-        console.log(`You picked ${player}, the computer picked ${computer}. You win!`);
+        return winner;
+    } else if((player === 'rock' && computer === 'scissors') || (player === 'paper' && computer === 'rock') || (player === 'scissors' && computer === 'paper')) {
+        para.textContent = `You picked ${player}, the computer picked ${computer}. You win!`;
+        myDiv.appendChild(para);
         winner = 'player';
+        return winner;
+    } else {
+        para.textContent = `You picked ${player}, the computer picked ${computer}. It's a tie!`;
+        myDiv.appendChild(para);
+        winner = 'tie';
+        return;
     }
-    return winner;
+   
 }
+
 
 let fullGame = () => {
-    let playerWins = 0;
-    let computerWins = 0;
-    for(let i = 0; i < 5; i++) {
-        let gameResult = oneRound();
-        if(gameResult === 'Invalid') {
-            console.log("Wait...That's illegal.");
-            return;
-        }
-        if(gameResult === 'player') {
-            playerWins++;
-        } else {
-            computerWins++;
-        }
+    const buttons = document.querySelectorAll('#btn');
+    let playerScore = 0;
+    let computerScore = 0;
+
+
+    for(let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function btnChoice() {
+            let roundWinner = oneRound(buttons[i].textContent.toLowerCase());
+            if(roundWinner === 'player') {
+                playerScore++;
+            } else if(roundWinner === 'computer') {
+                computerScore++;
+            }
+            if(playerScore === 5) {
+                alert('You won the game!');
+                this.removeEventListener('click', btnChoice);
+
+                return;
+            } else if(computerScore === 5) {
+                alert('You lost!');
+                this.removeEventListener('click', btnChoice);
+                return;
+            }
+            
+        })
+        
     }
-    let gameWinner = playerWins > computerWins ? alert(`The final score is: \n Computer: ${computerWins} \n Player: ${playerWins} \n You won the game!`) : alert(`The final score is: \n Computer: ${computerWins}\n Player: ${playerWins} \n You lost.`);
-    return gameWinner;
+
+   
+
+    
+
 }
-
 fullGame();
-
