@@ -148,7 +148,7 @@ footer{
 
 header h1 {
   
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 600;
     text-align: center;
     padding: 35px;
@@ -220,7 +220,7 @@ header h1 {
     padding: 20px;
     margin: 15px;
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
     color: #FFA500;
 }
 
@@ -238,7 +238,7 @@ header h1 {
 
 .para {
     color: #FFA500;
-    font-size: 30px;
+    font-size: 25px;
     padding: 15px;
     margin-bottom: 25px;
 }
