@@ -18,64 +18,96 @@ let oneRound = (playerPick) => {
     let computer = computerPick();
 
     let winner = '';
-    const para = document.createElement('p');
+    const para = document.querySelector('#para');
     const myDiv = document.querySelector('#result');
+    myDiv.appendChild(para);
     myDiv.className = 'myDiv';
     if(player === 'Invalid') {
         return 'Invalid';
     }
     if((computer === 'rock' && player === 'scissors') || (computer === 'paper' && player === 'rock') || (computer === 'scissors' && player === 'paper')) {
         para.textContent = `You picked ${player}, the computer picked ${computer}. Computer wins!`;
-        myDiv.appendChild(para);
+   
         winner = 'computer';
         return winner;
     } else if((player === 'rock' && computer === 'scissors') || (player === 'paper' && computer === 'rock') || (player === 'scissors' && computer === 'paper')) {
         para.textContent = `You picked ${player}, the computer picked ${computer}. You win!`;
-        myDiv.appendChild(para);
+
         winner = 'player';
         return winner;
     } else {
         para.textContent = `You picked ${player}, the computer picked ${computer}. It's a tie!`;
-        myDiv.appendChild(para);
+
         winner = 'tie';
-        return;
+        return winner;
     }
    
+}
+
+let playAgain = () => {
+    const myBtn = document.createElement('button');
+    const myDiv = document.querySelector('#result');
+    myBtn.textContent = 'Play again?';
+    myBtn.className = 'reset-button';
+    myBtn.addEventListener('click', () => {
+        location.reload();
+    });
+    myDiv.appendChild(myBtn);
 }
 
 
 let fullGame = () => {
-    const buttons = document.querySelectorAll('#btn');
+    const buttons= document.querySelectorAll('#btn');
+    const btnSection = document.getElementById('buttons-section');
     let playerScore = 0;
     let computerScore = 0;
-
-
-    for(let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function btnChoice() {
-            let roundWinner = oneRound(buttons[i].textContent.toLowerCase());
-            if(roundWinner === 'player') {
-                playerScore++;
-            } else if(roundWinner === 'computer') {
-                computerScore++;
-            }
-            if(playerScore === 5) {
-                alert('You won the game!');
-                this.removeEventListener('click', btnChoice);
-
-                return;
-            } else if(computerScore === 5) {
-                alert('You lost!');
-                this.removeEventListener('click', btnChoice);
-                return;
-            }
+    const scores = document.querySelector('#scores');
+    scores.firstChild.textContent = playerScore;
+    scores.lastChild.textContent = computerScore;
+    Array.from(buttons).forEach(function(btn) {
+        btn.addEventListener('click', function getChoice() {
             
-        })
-        
-    }
+            let roundWinner  = oneRound(btn.getAttribute('data-value'));
+            console.log(roundWinner);
+            if(roundWinner == 'player') {
+                playerScore++;
+                scores.firstChild.textContent = playerScore;
+
+            } else if(roundWinner == 'computer') {
+                computerScore++;
+                scores.lastChild.textContent = computerScore;
+
+            }
+            if(computerScore == 5) {
+                console.log('lost');
+                console.log(playerScore);
+                console.log(computerScore);
+                btn.removeEventListener('click', getChoice);
+                let newContent = '<h2 style="color: purple; font-size: 50px;">You Lost!</h2>'
+                newContent.className = 'new-content';
+                btnSection.innerHTML = newContent;
+                playAgain();
+            } else if(playerScore == 5) {
+                console.log('won');
+                btn.removeEventListener('click', getChoice);
+                let newContent = '<h2 style="color: purple; font-size: 50px;">You Won!</h2>'
+                newContent.className = 'new-content';
+                btnSection.innerHTML = newContent;
+                playAgain();
+            }
+            if(computerScore == 5 || playerScore == 5) {
+                btn.removeEventListener('click', getChoice);
+                return;
+            }
+            return;
+        });
+    });
+
+
 
    
 
     
-
 }
+
 fullGame();

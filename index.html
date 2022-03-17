@@ -15,20 +15,39 @@
     <header class="typewriter">
         <h1 class>Welcome to my Rock, Paper, Scissors project. Have fun!</h1>
     </header>
-    <div class="buttons-section">
+    <div class="buttons-section" id="buttons-section">
         <div class="pictogram-section">
-            <img src="images/rock.png" alt="rock pictogram" class="game-img">
-            <button id="btn">Rock</button>
+            <div class="button" id="btn" data-value="rock">
+                <img src="images/rock.png" alt="rock pictogram" class="game-img">
+            </div>
         </div>
         <div class="pictogram-section">
-            <img src="images/paper.png" alt="paper pictogram" class="game-img">
-            <button id="btn">Paper</button>
+            <div class="button" id="btn" data-value="paper">
+                <img src="images/paper.png" alt="paper pictogram" class="game-img">
+            </div>
         </div>
         <div class="pictogram-section">
-            <img src="images/scissors.png" alt="scissors pictogram" class="game-img">
-            <button id="btn">Scissors</button>
+            <div class="button" id="btn" data-value="scissors">
+                <img src="images/scissors.png" alt="scissors pictogram" class="game-img">
+            </div>
         </div>
     </div>
-    <div id="result"></div>
+    <div class="scoreboard" id="scoreboard">
+        <h2 class="scoreboard-heading">Scoreboard:</h2>
+        <div class="scoreboard-img-box">
+            <img src="images/human.png" alt="your score" class="scoreboard-img" id="scoreboard-img">
+            <img src="images/computer.png" alt="computer score" class="scoreboard-img" id="scoreboard-img">
+        </div>
+        <div class="scores" id="scores">
+            <span id="player-score"></span>
+            <span>-</span>
+            <span id="computer-score"></span>
+        </div>
+    </div>
+    <div class="buffer"></div>
+    <div id="result" class="result">
+        <p id="para" class="para"></p>
+    </div>
+
 </body>
 </html>
