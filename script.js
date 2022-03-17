@@ -95,10 +95,7 @@ let fullGame = () => {
                 btnSection.innerHTML = newContent;
                 playAgain();
             }
-            if(computerScore == 5 || playerScore == 5) {
-                btn.removeEventListener('click', getChoice);
-                return;
-            }
+
             return;
         });
     });
